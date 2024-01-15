@@ -1,0 +1,105 @@
+create database mydb6;
+use mydb6;
+CREATE TABLE `student` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `address_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `student` VALUES (1,'Raj','Dave','raj_dave@yahoo.com',1),(2,'John','Smith','john_smith@gmail.com',2);
+
+CREATE TABLE `address` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `street` varchar(100) NOT NULL,
+  `city` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+INSERT INTO `address` VALUES (1,'Happy Street','Delhi'),(2,'Down the town Street','NY');
+
+For Post:
+
+http://localhost:8082/api/address/create
+Input:
+{
+    "street":"AnyStreet",
+    "city":"Mumbai"
+}
+Output:
+{
+    "addressId": 3,
+    "street": "AnyStreet",
+    "city": "Mumbai"
+}
+
+For Get:
+http://localhost:8082/api/address/getById/3
+
+Input : nothing
+Output : 
+{
+    "addressId": 3,
+    "street": "AnyStreet",
+    "city": "Mumbai"
+}
+ 
+----------------------------------------
+For Student 
+Get:
+http://localhost:8080/api/student/getById/1
+Input : URL
+Output:
+{
+    "id": 1,
+    "firstName": "Raj",
+    "lastName": "Dave",
+    "email": "raj_dave@yahoo.com",
+    "addressResponse": {
+        "addressId": 1,
+        "street": "Happy Street",
+        "city": "Delhi"
+    }
+}
+POST:
+http://localhost:8080/api/student/create
+INPUT:
+{
+"firstName": "John",
+    "lastName": "Smith",
+    "email": "john_smith@gmail.com",
+    "addressId":3
+}
+
+OUTPUT:
+{
+    "id": 3,
+    "firstName": "John",
+    "lastName": "Smith",
+    "email": "john_smith@gmail.com",
+    "addressResponse": {
+        "addressId": 3,
+        "street": "AnyStreet",
+        "city": "Mumbai"
+    }
+}
+
+
+API GATEWAY URL
+http://localhost:9090/student-service/api/student/getById/1
+
+INPUT :URL
+OUTPUT:
+{
+    "id": 1,
+    "firstName": "Raj",
+    "lastName": "Dave",
+    "email": "raj_dave@yahoo.com",
+    "addressResponse": {
+        "addressId": 1,
+        "street": "Happy Street",
+        "city": "Delhi"
+    }
+} 
+
+
